@@ -8,6 +8,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { HiMenuAlt1, HiMenuAlt3 } from 'react-icons/hi'
 import ResponsiveMenu from './ResponsiveMenu'
+import { clerkEnabled } from '../config'
 
 const Navbar = ({location, getLocation, openDropdown, setOpenDropdown}) => {
 
@@ -51,12 +52,18 @@ const Navbar = ({location, getLocation, openDropdown, setOpenDropdown}) => {
                         <span className='bg-red-500 px-2 rounded-full absolute -top-3 -right-3 text-white'>{cartItem.length}</span>
                     </Link>
                     <div className='hidden md:block'>
-                        <SignedOut>
-                            <SignInButton className="bg-red-500 text-white px-3 py-1 rounded-md cursor-pointer"/>
-                        </SignedOut>
-                        <SignedIn>
-                            <UserButton />
-                        </SignedIn>
+                        {clerkEnabled ? (
+                            <>
+                                <SignedOut>
+                                    <SignInButton className="bg-red-500 text-white px-3 py-1 rounded-md cursor-pointer"/>
+                                </SignedOut>
+                                <SignedIn>
+                                    <UserButton />
+                                </SignedIn>
+                            </>
+                        ) : (
+                            <span className='text-sm text-gray-500'>Auth unavailable</span>
+                        )}
                     </div>
                     {
                         openNav ? <HiMenuAlt3 onClick={()=>setOpenNav(false)} className='h-7 w-7 md:hidden'/>:<HiMenuAlt1 
